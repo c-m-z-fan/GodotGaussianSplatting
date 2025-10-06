@@ -68,7 +68,14 @@ static func load_gaussian_splats(point_cloud : PlyFile, stride : int, device : R
 				points[b+(k+1)+15] = p[v+(k/3+15)+9]
 				points[b+(k+2)+15] = p[v+(k/3+30)+9]
 		if should_terminate_reference[0]: return
-		device.buffer_update(buffer, i*STRUCT_SIZE*stride * 4, STRUCT_SIZE*tile_size * 4, points.to_byte_array())
+		
+		var offset := i*STRUCT_SIZE*stride * 4
+		var size := STRUCT_SIZE*tile_size * 4
+		var data := points.to_byte_array()
+		RenderingServer.call_on_render_thread(func():
+			device.buffer_update(buffer, offset, size, data)
+		)
+		
 		mutex.lock()
 		num_points_loaded[0] += tile_size
 		mutex.unlock()

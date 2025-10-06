@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="GaussianSplatting"
+config/name="GaussianSplattingInNewer"
 run/main_scene="res://main.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 boot_splash/show_image=false
@@ -40,9 +40,17 @@ gdscript/stretch/mode="canvas_items"
 window/vsync/vsync_mode=3
 window/show_image=false
 
+[dotnet]
+
+project/assembly_name="GaussianSplatting"
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/imgui-godot/plugin.cfg")
+
+[godots]
+
+version_hint=""
 
 [input]
 
@@ -59,5 +67,7 @@ toggle_fullscreen={
 
 [rendering]
 
+rendering_device/driver="d3d12"
+rendering_device/driver.windows="d3d12"
 environment/defaults/default_clear_color=Color(0, 0, 0, 1)
 anti_aliasing/quality/msaa_3d=1

@@ -111,7 +111,9 @@ func init_gpu() -> void:
 	# Begin loading splats asynchronously
 	should_terminate_thread[0] = false
 	num_splats_loaded[0] = 0
-	load_thread.start(PlyFile.load_gaussian_splats.bind(point_cloud, point_cloud.size / 1000, context.device, descriptors['splats'].rid, should_terminate_thread, num_splats_loaded, loaded.emit))
+	var rendering_device : RenderingDevice
+	rendering_device = RenderingServer.get_rendering_device()
+	load_thread.start(PlyFile.load_gaussian_splats.bind(point_cloud, point_cloud.size / 1000, rendering_device, descriptors['splats'].rid, should_terminate_thread, num_splats_loaded, loaded.emit))
 	
 func cleanup_gpu():
 	should_terminate_thread[0] = true
